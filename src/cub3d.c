@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 01:51:59 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/15 17:17:49 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/17 03:11:10 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,16 @@
 
 static void game_init(t_mlx *game)
 {
-	game->player.px = 296;
-	game->player.py = 296;
-	game->player.pa = 0;
-	game->player.pdx = cos(game->player.pa) * 5;
-	game->player.pdy = sin(game->player.pa) * 5;
+	game->player.x = WIDTH / 2;
+	game->player.y = HEIGHT / 2;
+	game->player.withd = 1;
+	game->player.height = 1;
+	game->player.turn_direction = 0;
+	game->player.walk_direction = 0;
+	game->player.rotation_angle = PI;
+	game->player.walk_speed = 100;
+	game->player.turn_speed = convert_deg_rad(5);
+	
 	game->map.col = 0;
 	game->map.raw = 0;
 	game->map.map = NULL;

@@ -6,23 +6,33 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 03:29:11 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/15 17:51:50 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/17 02:49:07 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-void draw_ray(t_mlx *game, int color)
+float convert_deg_rad(float deg)
+{
+	return (deg * (PI / 180.0));
+}
+
+float convert_rad_deg(float rad)
+{
+	return (rad * (180 / PI));
+}
+
+void draw_player(t_mlx *game, int color)
 {
 	int i;
 	int j;
 
 	i = 0;
-	while (i < 4)
+	while (i < game->player.height)
 	{
 		j = 0;
-		while (j < 8)
-			my_mlx_pixel_put(&game->img, (game->player.px + game->player.pdx * 5)+ j++, (game->player.py + game->player.pdy * 5) + i, color);	
+		while (j < game->player.withd)
+			my_mlx_pixel_put(&game->img, game->player.x + j++, game->player.y + i, color);	
 		i++;
 	}
 }
@@ -33,31 +43,16 @@ void back_ground(t_mlx *game)
 	int j;
 
 	i = 0;
-	while (i < 1080)
+	while (i < HEIGHT)
 	{
 		j = 0;
-		while (j < 1920)
+		while (j < WIDTH)
 			my_mlx_pixel_put(&game->img, j++, i, BG);	
 		i++;
 	}
 	draw_grid(game);
-	mlx_put_image_to_window(game->basic.mlx, game->basic.win, game->img.img, 0, 0);
-}
-
-void draw_player(t_mlx *game, int color)
-{
-	int i;
-	int j;
-
-	i = 0;
-	while (i < 16)
-	{
-		j = 0;
-		while (j < 16)
-			my_mlx_pixel_put(&game->img, game->player.px + j++, game->player.py + i, color);	
-		i++;
-	}
-	draw_ray(game, YLW);
+	draw_player(game, RED);
+	draw_fov(game);
 	mlx_put_image_to_window(game->basic.mlx, game->basic.win, game->img.img, 0, 0);
 }
 

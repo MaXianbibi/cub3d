@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:40:03 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/15 18:10:24 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/17 02:57:58 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,45 @@
 # include <mlx.h>
 # include <stdbool.h>
 # include <math.h>
-# define PI 3.14159265359
 
+// a sup
+# include <stdio.h>
+
+# define PI 			3.14159265359
+# define TWO_PI 		6.28318530718
 
 // COLORS
 
-# define YLW 	0xFFFF00
-# define BG	 	0xA6A6A6
-# define WHT	0xFFFFFF
-# define BLK	0
+# define YLW 			0xFFFF00
+# define BG	 			0xA6A6A6
+# define WHT			0xFFFFFF
+# define GRN			0x00FF00
+# define RED			0xFF0000
+# define BLK			0
 
 // KEY
-# define D 2
-# define A 0
-# define W 1
-# define S 13
-# define ESC 53
+# define D 				2
+# define A 				0
+# define S 				1
+# define W 				13
+# define ESC 			53
+# define RIGHT_ARROW 	123
+# define LEFT_ARROW		124
+
+# define WIDTH 			640
+# define HEIGHT 		480
 
 typedef struct	s_player
 {
-	float		px;
-	float 		py;
-	float		pdx;
-	float		pdy;
-	float		pa;
-
+	float		x;
+	float 		y;
+	float		withd;
+	float		height;
+	int			turn_direction; // -1 for left, 1 for right
+	int			walk_direction; // î
+	float		rotation_angle;
+	float		walk_speed;
+	float		turn_speed;
 }				t_player;
 
 typedef struct	s_map
@@ -82,5 +96,11 @@ void	back_ground(t_mlx *game);
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 void	draw_square(t_mlx *game, int x, int y, int color);
 void	draw_grid(t_mlx *game);
+void	destroy_image(t_mlx *game);
+void 	draw_line(t_mlx *game, float angle);
+float	convert_rad_deg(float rad);
+float	convert_deg_rad(float deg);
+void	draw_fov(t_mlx *game);
+void	draw_line_dda(t_mlx *game, float angle);
 
 #endif
