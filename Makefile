@@ -6,7 +6,7 @@
 #    By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/04 22:00:22 by jmorneau          #+#    #+#              #
-#    Updated: 2022/09/17 02:49:15 by jmorneau         ###   ########.fr        #
+#    Updated: 2022/09/17 23:32:31 by jmorneau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ RM = @rm -f
 INCLUDE = -I include/
 
 SRC_DIR = src/
-SRC_FILES =	cub3d.c image_init.c key_interaction.c map_reader.c draw.c draw_grid.c ray_casting.c
+SRC_FILES =	cub3d.c image_init.c key_interaction.c map_reader.c draw.c draw_grid.c ray_casting.c usefull.c
 
 OBJ_DIR = objs/
 OBJS = ${addprefix ${OBJ_DIR}, $(SRC_FILES:.c=.o)}

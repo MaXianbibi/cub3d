@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:40:03 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/17 02:57:58 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/18 02:18:24 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,12 @@
 
 # define PI 			3.14159265359
 # define TWO_PI 		6.28318530718
+
+# define WIDTH 			640
+# define HEIGHT 		480
+
+# define FOV_ANGLE		(66 * (PI / 180))
+# define NUM_RAY		WIDTH
 
 // COLORS
 
@@ -42,8 +48,26 @@
 # define RIGHT_ARROW 	123
 # define LEFT_ARROW		124
 
-# define WIDTH 			640
-# define HEIGHT 		480
+
+
+
+typedef struct	s_ray
+{
+	float	ray_angle;
+	float	wall_hit_x;
+	float	wall_hit_y;
+	float	distance;
+	int		hit_vertical;
+	
+	// a pt supp
+	int		up;
+	int		down;
+	int		left;
+	int		right;
+	
+	int		wall_hit_content;
+
+}				t_ray;
 
 typedef struct	s_player
 {
@@ -86,6 +110,7 @@ typedef struct s_mlx
 	t_data		img;
 	t_player	player;
 	t_map		map;
+	t_ray		*ray;
 }	t_mlx;
 
 void 	image_init(t_mlx *game);
@@ -101,6 +126,8 @@ void 	draw_line(t_mlx *game, float angle);
 float	convert_rad_deg(float rad);
 float	convert_deg_rad(float deg);
 void	draw_fov(t_mlx *game);
-void	draw_line_dda(t_mlx *game, float angle);
+void	dda(t_mlx *game, float angle);
+float	normalize_angle(float angle);
+
 
 #endif

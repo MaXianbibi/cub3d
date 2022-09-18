@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 01:57:08 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/16 19:35:51 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/17 18:54:34 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	destroy_image(t_mlx *game)
 {
 		mlx_destroy_image(game->basic.mlx, game->basic.win);
 		ft_free_chartable(game->map.map);
+		free(game->ray);
 		exit(0);
 }
 
