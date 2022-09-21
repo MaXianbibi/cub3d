@@ -6,14 +6,14 @@
 #    By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/04 22:00:22 by jmorneau          #+#    #+#              #
-#    Updated: 2022/09/17 23:32:31 by jmorneau         ###   ########.fr        #
+#    Updated: 2022/09/20 22:55:51 by jmorneau         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3d
 LIBFT = libft/libft.a
 CC = @gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 LFLAGS = -lmlx -framework OpenGL -framework AppKit
 RM = @rm -f
 INCLUDE = -I include/
