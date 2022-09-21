@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 01:57:08 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/17 18:54:34 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/21 00:48:23 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ void image_init(t_mlx *game)
 	// game->basic.win = mlx_new_window(game->basic.mlx, 64 * game->map.raw, 64 * game->map.col + game->map.col * 2, "cub3d");
 	// game->img.img = mlx_new_image(game->basic.mlx, 64 * game->map.raw + game->map.raw * 2, 64 * game->map.col + game->map.col * 2);
 
-	game->basic.win = mlx_new_window(game->basic.mlx, WIDTH, HEIGHT, "cub3d");
-	game->img.img = mlx_new_image(game->basic.mlx, WIDTH, HEIGHT);
+	game->basic.win = mlx_new_window(game->basic.mlx, WIDTH_TEST, HEIGHT, "cub3d");
+	game->img.img = mlx_new_image(game->basic.mlx, WIDTH_TEST, HEIGHT);
 	
 	
 	

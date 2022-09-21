@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:40:03 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/21 00:25:01 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/21 01:29:51 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@
 
 
 # define WIDTH 			640
-# define HEIGHT 		480
+# define HEIGHT 		448
+
+# define WIDTH_TEST		WIDTH * 2
 
 # define FOV_ANGLE		(66 * (PI / 180))
 # define NUM_RAY		WIDTH
@@ -138,6 +140,7 @@ void	draw_fov(t_mlx *game);
 void	dda(t_mlx *game, float angle);
 float	normalize_angle(float angle);
 float	dda_v2(t_mlx *game, float angle);
+void	draw_walls(t_mlx *game, float disT, int pixel_x, float angle);
 
 
 
