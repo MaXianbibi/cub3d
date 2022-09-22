@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 03:29:11 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/21 00:50:26 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/21 22:43:33 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,12 @@ void back_ground(t_mlx *game)
 	{
 		j = 0;
 		while (j < WIDTH_TEST)
-			my_mlx_pixel_put(&game->img, j++, i, BG);	
+		{
+			if (i < HEIGHT / 2)	
+				my_mlx_pixel_put(&game->img, j++, i, CELLING);
+			else	
+				my_mlx_pixel_put(&game->img, j++, i, FLOOR);
+		}
 		i++;
 	}
 	draw_grid(game);

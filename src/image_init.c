@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 01:57:08 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/21 00:48:23 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/22 19:16:29 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	destroy_image(t_mlx *game)
 {
-		mlx_destroy_image(game->basic.mlx, game->basic.win);
+		mlx_destroy_image(game->basic.mlx, &game->img);
 		ft_free_chartable(game->map.map);
 		free(game->ray);
 		exit(0);
@@ -23,7 +23,9 @@ void	destroy_image(t_mlx *game)
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
-
+	
+	if (x >= WIDTH_TEST || y >= HEIGHT)
+		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
@@ -40,7 +42,7 @@ void image_init(t_mlx *game)
 	
 	
 	game->img.addr = mlx_get_data_addr(game->img.img, &game->img.bits_per_pixel, &game->img.line_length,
-								&game->img.endian);				
+								&game->img.endian);
 	back_ground(game);
 	draw_player(game, YLW);
 	mlx_hook(game->basic.win, 2, 1L << 0, move, game);

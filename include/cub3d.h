@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:40:03 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/21 01:29:51 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/22 19:52:28 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,14 @@
 # define WHT			0xFFFFFF
 # define GRN			0x00FF00
 # define RED			0xFF0000
+# define BRG			0x800020
+# define BLU			0x0000FF
+# define BRL			0xa89645
+# define BRS			0x7a692b
 # define BLK			0
+
+# define CELLING		0x5c4e1f
+# define FLOOR			0xb29852
 
 // KEY
 # define D 				2
@@ -59,26 +66,14 @@
 
 typedef struct	s_ray
 {
-	
 	float		side_delta_x;
 	float		side_delta_y;
+	float		dist;
 	
-	
-	// float	ray_angle;
-	// float	wall_hit_x;
-	// float	wall_hit_y;
-	// float	distance;
-	// int		hit_vertical;
-	
-	// // a pt supp
-	// int		up;
-	// int		down;
-	// int		left;
-	// int		right;
-	
-	// int		wall_hit_content;
-
+	int			hit_down;
+	int			hit_left;
 }				t_ray;
+
 
 typedef struct	s_player
 {
@@ -107,7 +102,20 @@ typedef struct	s_data
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
+	
+	int			img_width;
+	int			img_height;
 }				t_data;
+
+
+typedef struct	s_texture
+{
+	t_data		nort;
+	t_data		south;
+	t_data		west;
+	t_data		east;
+
+}				t_texture;
 
 typedef struct s_basic
 {
@@ -122,6 +130,7 @@ typedef struct s_mlx
 	t_player	player;
 	t_map		map;
 	t_ray		*ray;
+	t_texture	texture;
 }	t_mlx;
 
 void 	image_init(t_mlx *game);
@@ -139,9 +148,10 @@ float	convert_deg_rad(float deg);
 void	draw_fov(t_mlx *game);
 void	dda(t_mlx *game, float angle);
 float	normalize_angle(float angle);
-float	dda_v2(t_mlx *game, float angle);
-void	draw_walls(t_mlx *game, float disT, int pixel_x, float angle);
-
+t_ray	dda_v2(t_mlx *game, float angle);
+void	draw_walls(t_mlx *game, t_ray ray, int pixel_x, float angle);
+int		get_pixel(t_data *data, int x, int y);
+void	scale(t_data *img, float scale, float stepx, t_data *img2);
 
 
 #endif

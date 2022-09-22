@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 02:37:39 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/21 01:32:56 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/21 22:27:54 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,17 +24,15 @@ int mapHasWallAt(t_mlx *game , int x, int y) {
 void draw_fov(t_mlx *game)
 {
 	float cangle = game->player.rotation_angle;
-	float j = cangle + FOV_ANGLE;
-	
-	float distance;
+	float j = cangle - FOV_ANGLE;
 	int i;
 
 	i = 0;
-	while (cangle < j)
+	while (cangle > j)
 	{
-		distance = dda_v2(game, cangle - (FOV_ANGLE / 2));
-		draw_walls(game, distance, i, cangle);
-		cangle += FOV_ANGLE / NUM_RAY;
+		game->ray[i] = dda_v2(game, cangle + (FOV_ANGLE / 2));
+		draw_walls(game, game->ray[i], i, cangle + (FOV_ANGLE / 2));
+		cangle -= FOV_ANGLE / NUM_RAY;
 		i++;
 	}
 	
@@ -78,6 +76,8 @@ t_ray dda_h(t_mlx *game, float angle)
 		rx = game->player.x -((game->player.y - ry) * aTan) ;		
 		yo = -64;
 		xo = (yo * aTan);
+		ray.hit_down = 0;
+		ray.hit_left = 0;
 	}
 	else if (ra > PI)
 	{
@@ -85,6 +85,8 @@ t_ray dda_h(t_mlx *game, float angle)
 		rx = game->player.x - ((game->player.y - ry) * aTan);
 		yo = 64;
 		xo = yo * aTan;
+		ray.hit_down = 1;
+		ray.hit_left = 1;
 	}
 	else if (ra == 0 || ra == PI)
 	{
@@ -126,6 +128,8 @@ t_ray dda_v(t_mlx *game, float angle)
 		ry =  game->player.y - ((game->player.x - rx) * nTan) ;		
 		xo = -64;
 		yo = (xo * nTan);
+		ray.hit_left = 1;
+		ray.hit_down = 0;
 	}
 	else if (ra < QUART_PI || ra > QUART3_PI)
 	{
@@ -133,6 +137,8 @@ t_ray dda_v(t_mlx *game, float angle)
 		ry = game->player.y - ((game->player.x - rx) * nTan) ;
 		xo = 64;
 		yo = xo * nTan;
+		ray.hit_left = 0;
+		ray.hit_down = 1;
 	}
 	else if (ra == QUART_PI || ra == QUART3_PI)
 	{
@@ -149,28 +155,28 @@ t_ray dda_v(t_mlx *game, float angle)
 		rx += xo;
 		ry += yo;
 	}
+	
 	ray.side_delta_x = rx;
 	ray.side_delta_y = ry;
 	return (ray);
 }
 
-float dda_v2(t_mlx *game, float angle)
+t_ray dda_v2(t_mlx *game, float angle)
 {
 	t_ray	ray_h = dda_h(game, angle);
 	t_ray	ray_v = dda_v(game, angle);
 	
-	float	ray_h_d = sqrt(((ray_h.side_delta_x - game->player.x) * (ray_h.side_delta_x - game->player.x)) + ((ray_h.side_delta_y - game->player.y) * (ray_h.side_delta_y - game->player.y)));
-	float	ray_v_d = sqrt(((ray_v.side_delta_x - game->player.x) * (ray_v.side_delta_x - game->player.x)) + ((ray_v.side_delta_y - game->player.y) * (ray_v.side_delta_y - game->player.y)));
-
-	if (ray_h_d < ray_v_d)
+	ray_h.dist = sqrt(((ray_h.side_delta_x - game->player.x) * (ray_h.side_delta_x - game->player.x)) + ((ray_h.side_delta_y - game->player.y) * (ray_h.side_delta_y - game->player.y)));
+	ray_v.dist = sqrt(((ray_v.side_delta_x - game->player.x) * (ray_v.side_delta_x - game->player.x)) + ((ray_v.side_delta_y - game->player.y) * (ray_v.side_delta_y - game->player.y)));
+	if (ray_h.dist < ray_v.dist)
 	{
 		draw_line_dda(game, ray_h.side_delta_x, ray_h.side_delta_y, angle);
-		return (ray_h_d);
+		return (ray_h);
 	}
 	else
 	{
 		draw_line_dda(game, ray_v.side_delta_x, ray_v.side_delta_y, angle);
-		return (ray_v_d);
+		return (ray_v);
 	}
 
 }
