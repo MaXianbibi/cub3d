@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:40:03 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/22 19:52:28 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/29 23:16:18 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@
 # define QUART3_PI		3 * PI / 2
 
 
-# define WIDTH 			640
-# define HEIGHT 		448
+# define WIDTH 			640.0
+# define HEIGHT 		448.0
 
 # define WIDTH_TEST		WIDTH * 2
 
 # define FOV_ANGLE		(66 * (PI / 180))
 # define NUM_RAY		WIDTH
-
+# define WIDTH_ASSET	64.0
 
 // COLORS
 
@@ -103,8 +103,8 @@ typedef struct	s_data
 	int			line_length;
 	int			endian;
 	
-	int			img_width;
-	int			img_height;
+	float		img_width;
+	float		img_height;
 }				t_data;
 
 
@@ -151,7 +151,8 @@ float	normalize_angle(float angle);
 t_ray	dda_v2(t_mlx *game, float angle);
 void	draw_walls(t_mlx *game, t_ray ray, int pixel_x, float angle);
 int		get_pixel(t_data *data, int x, int y);
-void	scale(t_data *img, float scale, float stepx, t_data *img2);
+void 	scale(t_data *img, t_data *img_texture, float lineH, int pixel, float ty_off, t_mlx *game);
+void	draw_walls_beta(t_mlx *game, t_ray ray, int pixel_x, float angle);
 
 
 #endif

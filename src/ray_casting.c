@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 02:37:39 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/21 22:27:54 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/29 21:19:35 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void draw_fov(t_mlx *game)
 	while (cangle > j)
 	{
 		game->ray[i] = dda_v2(game, cangle + (FOV_ANGLE / 2));
-		draw_walls(game, game->ray[i], i, cangle + (FOV_ANGLE / 2));
+		draw_walls_beta(game, game->ray[i], i, cangle + (FOV_ANGLE / 2));
 		cangle -= FOV_ANGLE / NUM_RAY;
 		i++;
 	}

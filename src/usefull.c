@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 23:24:54 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/22 19:21:42 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/30 00:36:07 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ float normalize_angle(float angle)
 
 int get_pixel(t_data *data, int x, int y)
 {
-	if (x >= 1920 || x < 0 || y >= 1080 || y < 0)
+	if (x >= WIDTH_TEST || x < 0 || y >= HEIGHT || y < 0)
 		return 0;
 	
 	char *dst;
@@ -32,20 +32,48 @@ int get_pixel(t_data *data, int x, int y)
 	return *(unsigned int *)dst;
 }
 
-void scale(t_data *img, float scale, float stepx, t_data *img2)
+void print_texture(t_data *img, t_data *img_texture, float stepx, float stepy, float lineO, float ty_step, float lineH, float pixel_x)
 {
-	float image = 120.0 * scale;
-	float bon = 120.0 / image;
-	float stepi = 0;
-	int color;
 	int i = 0;
+	int color;
 
-	float lineO = (HEIGHT / 2.0) - image/2.0;
-	while (i < image)
+	while (i < lineH)
 	{
-		color = get_pixel(img2, stepx * bon , stepi);
-		my_mlx_pixel_put(img, (stepx) + WIDTH, i + lineO, color);
-		stepi += bon;
+		color = get_pixel(img_texture,	stepx, stepy);
+		my_mlx_pixel_put(img, pixel_x + WIDTH, i + lineO, color);
+		stepy += ty_step;
 		i++;
 	}
+
+}
+void scale(t_data *img, t_data *img_texture, float lineH, int pixel, float ty_off, t_mlx *game)
+{
+	int i;
+	int color;
+	(void)ty_off;
+	
+	float stepx = 0;
+	
+	if 		((game->ray[pixel].hit_down && game->ray[pixel].hit_left) || (!game->ray[pixel].hit_down && !game->ray[pixel].hit_left))
+		stepx = fmod(game->ray[pixel].side_delta_x, 64);
+	else
+		stepx = fmod(game->ray[pixel].side_delta_y, 64);
+	stepx = (stepx * 1.875);
+
+	float lineO = (HEIGHT / 2.0) - lineH / 2.0;
+	float bon = 120.0 / lineH;
+	// float bon = ty_off;
+	// float stepy = ty_off;
+	float stepy = 0;
+	// stepy *= -1;
+
+	i = 0;
+	while (i < lineH)
+	{
+		color = get_pixel(img_texture, stepx, stepy);
+		my_mlx_pixel_put(img, pixel + WIDTH, i + lineO, color);
+		stepy += bon;
+		i++;
+	}
+	// printf("%d\n", pixel);
 }
