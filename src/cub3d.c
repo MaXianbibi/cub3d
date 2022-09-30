@@ -6,29 +6,36 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 01:51:59 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/30 00:57:11 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/09/30 18:29:55 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/cub3d.h"
 
-static void	texture_init(t_mlx *game)
+static void	texture_init(t_mlx *game, t_data *img, char *relative_path)
 {
-	char *relative_path = "./texture/rrr.xpm";
-
-	int img_width;
 	int img_height;
+	int img_width;
+	
 
-	game->texture.nort.img = mlx_xpm_file_to_image(game->basic.mlx, relative_path, &img_width, &img_height);
-	if (!game->texture.nort.img)
-		printf("ok\n");
-	
-	game->texture.nort.addr = mlx_get_data_addr(game->texture.nort.img, &game->texture.nort.bits_per_pixel, &game->texture.nort.line_length,
-								  &game->texture.nort.endian);
+
+	img->img = mlx_xpm_file_to_image(game->basic.mlx, relative_path, &img_width, &img_height);
+	if (!img->img)
+	{
+		printf("Error\n No image \n");
+		return ;
+	}	
+	img->addr = mlx_get_data_addr(img->img, &img->bits_per_pixel, &img->line_length,
+								  &img->endian);
+	if (!img->addr)
+	{
+		printf("Error\n No image \n");
+		return ;
+	}	
 								  
-	game->texture.nort.img_height = (float)img_height;
-	game->texture.nort.img_width = (float)img_width;
-	
+							  
+	img->img_height = (float)img_height;
+	img->img_width = (float)img_width;
 	// printf("%d\n", img_width);
 }
 
@@ -48,7 +55,10 @@ static void game_init(t_mlx *game)
 	game->map.raw = 0;
 	game->map.map = NULL;
 	game->basic.mlx = mlx_init();
-	texture_init(game);
+	texture_init(game, &game->texture.nort, "./texture/ennemie.xpm");
+	texture_init(game, &game->texture.west, "./texture/ennemie.xpm");
+	texture_init(game, &game->texture.east, "./texture/ennemie.xpm");
+	texture_init(game, &game->texture.south, "./texture/ennemie.xpm");
 }
 
 int main(int argc, char **argv)
