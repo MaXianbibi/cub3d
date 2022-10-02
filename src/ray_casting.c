@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 02:37:39 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/29 21:19:35 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/10/02 03:50:37 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,15 @@ int mapHasWallAt(t_mlx *game , int x, int y) {
         return 1;
     }
 	if (game->map.map[y][x] != '0')
+		return (1);
+    return (0);
+}
+
+int mapHasDoor(t_mlx *game , int x, int y) {
+    if (x < 0 || x > (WIDTH / 64) - 1 || y < 0 || y > (HEIGHT / 64) - 1) {
+        return 1;
+    }
+	if (game->map.map[y][x] == '2')
 		return (1);
     return (0);
 }
@@ -97,7 +106,7 @@ t_ray dda_h(t_mlx *game, float angle)
 	{
 		mx = (int)(rx) >> 6;
 		my = ((int)(ry) >> 6);	
-		if (game->map.map[my][mx] != '0')
+		if (mapHasWallAt(game, mx, my))
 			break;
 		rx += xo;
 		ry += yo;
@@ -105,6 +114,7 @@ t_ray dda_h(t_mlx *game, float angle)
 	
 	ray.side_delta_x = rx;
 	ray.side_delta_y = ry;
+	ray.is_a_door = mapHasDoor(game, mx, my);
 	return (ray);
 }
 
@@ -158,6 +168,7 @@ t_ray dda_v(t_mlx *game, float angle)
 	
 	ray.side_delta_x = rx;
 	ray.side_delta_y = ry;
+	ray.is_a_door = mapHasDoor(game, mx, my);
 	return (ray);
 }
 

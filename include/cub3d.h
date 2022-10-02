@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:40:03 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/30 18:36:12 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/10/02 03:59:45 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,18 @@
 # define ESC 			53
 # define RIGHT_ARROW 	123
 # define LEFT_ARROW		124
+# define SHIFT			257
+# define E				14
 
 
 
+typedef struct	s_key_b
+{
+	int			d;
+	int			a;
+	int			s;
+	int			w;
+}				t_key_b;
 
 typedef struct	s_ray
 {
@@ -72,6 +81,7 @@ typedef struct	s_ray
 	
 	int			hit_down;
 	int			hit_left;
+	int			is_a_door;
 }				t_ray;
 
 
@@ -114,6 +124,7 @@ typedef struct	s_texture
 	t_data		south;
 	t_data		west;
 	t_data		east;
+	t_data		door;
 
 }				t_texture;
 
@@ -131,6 +142,7 @@ typedef struct s_mlx
 	t_map		map;
 	t_ray		*ray;
 	t_texture	texture;
+	t_key_b		key_hook;
 }	t_mlx;
 
 void 	image_init(t_mlx *game);
@@ -153,5 +165,9 @@ int		get_pixel(t_data *data, int x, int y);
 void	draw_walls_beta(t_mlx *game, t_ray ray, int pixel_x, float angle);
 void	print_texture(t_data *img, t_data *img_texture, float stepx, float stepy, float lineO, float ty_step, float lineH, float pixel_x);
 t_data	*cardinal_points(t_ray *ray, t_mlx *game);
+int		move_player(t_mlx *game);
+// int		move_beta(int keycode, t_mlx *game);
+int		check_key_is_on(int keycode, t_mlx *game);
+int		mapHasDoor(t_mlx *game , int x, int y);
 
 #endif

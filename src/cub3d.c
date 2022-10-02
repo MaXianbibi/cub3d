@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 01:51:59 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/30 18:29:55 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/10/02 03:42:20 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,17 +48,22 @@ static void game_init(t_mlx *game)
 	game->player.turn_direction = 0;
 	game->player.walk_direction = 0;
 	game->player.rotation_angle = PI * 3 / 2;
-	game->player.walk_speed = 100;
-	game->player.turn_speed = convert_deg_rad(10);
-	game->ray = malloc(sizeof(t_ray) * NUM_RAY);
+	game->player.walk_speed = 3;
+	game->player.turn_speed = convert_deg_rad(3);
+	game->ray = ft_calloc(sizeof(t_ray), NUM_RAY);
 	game->map.col = 0;
 	game->map.raw = 0;
 	game->map.map = NULL;
 	game->basic.mlx = mlx_init();
-	texture_init(game, &game->texture.nort, "./texture/ennemie.xpm");
-	texture_init(game, &game->texture.west, "./texture/ennemie.xpm");
-	texture_init(game, &game->texture.east, "./texture/ennemie.xpm");
-	texture_init(game, &game->texture.south, "./texture/ennemie.xpm");
+	texture_init(game, &game->texture.nort, "./texture/rrr.xpm");
+	texture_init(game, &game->texture.west, "./texture/rrr.xpm");
+	texture_init(game, &game->texture.east, "./texture/rrr.xpm");
+	texture_init(game, &game->texture.door, "./texture/void.xpm");
+	texture_init(game, &game->texture.south, "./texture/rrr.xpm");
+	game->key_hook.a = 0;
+	game->key_hook.d = 0;
+	game->key_hook.w = 0;
+	game->key_hook.s = 0;
 }
 
 int main(int argc, char **argv)

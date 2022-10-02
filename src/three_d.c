@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/21 00:58:59 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/30 18:39:03 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/10/01 23:54:40 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,6 @@ void draw_walls_beta(t_mlx *game, t_ray ray, int pixel_x, float angle)
 }
 
 	// float lineO = (HEIGHT / 2.0) - lineH / 2.0;
-
-
 
 	// if 		(ray.hit_down && ray.hit_left) // down
 	// {

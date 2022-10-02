@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 23:24:54 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/30 18:36:04 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/10/02 03:52:59 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,12 @@ void print_texture(t_data *img, t_data *img_texture, float stepx, float stepy, f
 		stepy += ty_step;
 		i++;
 	}
-
 }
 
 t_data *cardinal_points(t_ray *ray, t_mlx *game)
 {
+	if (ray->is_a_door)
+			return (&game->texture.door);
 	if 		(ray->hit_down && ray->hit_left) // down
 			return (&game->texture.nort);
 	else if (ray->hit_left && !ray->hit_down) // left
