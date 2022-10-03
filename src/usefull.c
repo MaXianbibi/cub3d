@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 23:24:54 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/10/02 03:52:59 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/10/03 18:01:48 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,43 @@ int get_pixel(t_data *data, int x, int y)
 	return *(unsigned int *)dst;
 }
 
-void print_texture(t_data *img, t_data *img_texture, float stepx, float stepy, float lineO, float ty_step, float lineH, float pixel_x)
+void print_texture(t_data *img, t_data *img_texture, float stepx, float stepy, float lineO, float ty_step, float lineH, float pixel_x, t_mlx *game, float angle)
 {
 	int i = 0;
 	int color;
 
+	float cstepy = stepy;
 	while (i < lineH)
 	{
-		color = get_pixel(img_texture,	stepx, stepy);
+		color = get_pixel(img_texture,	stepx, cstepy);
 		my_mlx_pixel_put(img, pixel_x + WIDTH, i + lineO, color);
-		stepy += ty_step;
+		cstepy += ty_step;
 		i++;
 	}
+	i += lineO;
+	cstepy = stepy;
+
+	// float dy;
+	// float dx;
+	int j = 0;
+	(void)game;
+	(void)angle;
+	while (i < HEIGHT)
+	{
+		// dy = i - (j - sin(angle - game->player.rotation_angle));
+		// dx = i - (j + cos(angle - game->player.rotation_angle));
+		 	
+		// if ((int)pixel_x % 3 == 0)
+			// my_mlx_pixel_put(img, pixel_x + WIDTH, i, RED);
+		// else if ((int)pixel_x % 3 == 1)
+			// my_mlx_pixel_put(img, pixel_x + WIDTH, i, GRN);
+		// else if ((int)pixel_x % 3 == 2)
+			// my_mlx_pixel_put(img, pixel_x + WIDTH, i, BLU);
+		i++;
+		j++;
+	}
+	
+	
 }
 
 t_data *cardinal_points(t_ray *ray, t_mlx *game)

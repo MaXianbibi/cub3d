@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 01:57:08 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/10/02 02:00:34 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/10/03 18:04:16 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,7 @@ void image_init(t_mlx *game)
 
 	mlx_hook(game->basic.win, 2, 0, move, game);
 	mlx_loop_hook(game->basic.mlx, move_player, game);
-	
 	mlx_hook(game->basic.win, 3, 0, check_key_is_on, game);
-	
-
 	
 	mlx_hook(game->basic.win, 17, 0, (void *)exit, 0);
 	mlx_loop(game->basic.mlx);

@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:40:03 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/10/02 03:59:45 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/10/03 17:49:13 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ float	normalize_angle(float angle);
 t_ray	dda_v2(t_mlx *game, float angle);
 int		get_pixel(t_data *data, int x, int y);
 void	draw_walls_beta(t_mlx *game, t_ray ray, int pixel_x, float angle);
-void	print_texture(t_data *img, t_data *img_texture, float stepx, float stepy, float lineO, float ty_step, float lineH, float pixel_x);
+void	print_texture(t_data *img, t_data *img_texture, float stepx, float stepy, float lineO, float ty_step, float lineH, float pixel_x, t_mlx *game, float angle);
 t_data	*cardinal_points(t_ray *ray, t_mlx *game);
 int		move_player(t_mlx *game);
 // int		move_beta(int keycode, t_mlx *game);
