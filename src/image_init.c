@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 01:57:08 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/10/03 18:04:16 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/10/16 00:08:33 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 	
-	if (x >= WIDTH_TEST || y >= HEIGHT)
+	if (x >= WIDTH_TEST || y >= HEIGHT || x < 0 || y < 0 || color == INV)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
@@ -37,11 +37,18 @@ void image_init(t_mlx *game)
 	game->basic.win = mlx_new_window(game->basic.mlx, WIDTH_TEST, HEIGHT, "cub3d");
 	game->img.img = mlx_new_image(game->basic.mlx, WIDTH_TEST, HEIGHT);
 	
+	game->hud_img.img = mlx_new_image(game->basic.mlx, WIDTH_TEST, HEIGHT);
+	
 	mlx_do_key_autorepeatoff(game->basic.mlx);
-
+	
 	
 	game->img.addr = mlx_get_data_addr(game->img.img, &game->img.bits_per_pixel, &game->img.line_length,
 								&game->img.endian);
+								
+	game->hud_img.addr = mlx_get_data_addr(game->hud_img.img, &game->hud_img.bits_per_pixel, &game->hud_img.line_length,
+								&game->hud_img.endian);
+
+								
 	back_ground(game);
 	draw_player(game, YLW);
 

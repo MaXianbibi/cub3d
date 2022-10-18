@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 01:51:59 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/10/02 03:42:20 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:10:00 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,20 @@ static void game_init(t_mlx *game)
 	texture_init(game, &game->texture.nort, "./texture/rrr.xpm");
 	texture_init(game, &game->texture.west, "./texture/rrr.xpm");
 	texture_init(game, &game->texture.east, "./texture/rrr.xpm");
-	texture_init(game, &game->texture.door, "./texture/void.xpm");
+	texture_init(game, &game->texture.door, "./texture/ennemie.xpm");
 	texture_init(game, &game->texture.south, "./texture/rrr.xpm");
+	texture_init(game, &game->texture.floor, "./texture/perfect!.xpm");
+	texture_init(game, &game->texture.celling, "./texture/celling.xpm");
 	game->key_hook.a = 0;
 	game->key_hook.d = 0;
 	game->key_hook.w = 0;
 	game->key_hook.s = 0;
+	game->frames = 64;
 }
 
 int main(int argc, char **argv)
 {
-	t_mlx game;
+	t_mlx game = { 0 };
 
 	if (argc != 2)
 		return (ft_print_error("Il faut 2 arguments\n"));

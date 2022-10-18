@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 03:29:11 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/09/21 22:43:33 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:30:28 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,13 @@ void back_ground(t_mlx *game)
 	draw_grid(game);
 	draw_player(game, RED);
 	draw_fov(game);
+
+	game->frames += 4;
 	mlx_put_image_to_window(game->basic.mlx, game->basic.win, game->img.img, 0, 0);
+
+	
+	// mlx_put_image_to_window(game->basic.mlx, game->basic.win, game->hud_img.img, 0, 0);
+	
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 01:58:49 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/10/03 18:06:05 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/10/17 19:00:19 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,10 @@ int move_player(t_mlx *game)
 		game->player.x -= cos(game->player.rotation_angle) * game->player.walk_speed;
 		game->player.y += sin(game->player.rotation_angle) * game->player.walk_speed;
 	}
+
 	back_ground(game);
 	return (0);
 }
-
-// int	move(int keycode, t_mlx *game)
-// {
-// 	if (keycode == A)
-// 		game->player.rotation_angle += game->player.turn_speed;
-// 	else if (keycode == D)
-// 		game->player.rotation_angle -= game->player.turn_speed;
-// 	else if (keycode == W)
-// 	{
-// 		game->player.x += cos(game->player.rotation_angle) * 10;
-// 		game->player.y -= sin(game->player.rotation_angle) * 10;
-// 	}
-// 	else if (keycode == S)
-// 	{
-// 		game->player.x -= cos(game->player.rotation_angle) * 10;
-// 		game->player.y += sin(game->player.rotation_angle) * 10;
-// 	}
-// 	else if (keycode == ESC)
-// 		destroy_image(game);
-		
-// 	back_ground(game);
-// 		// draw_fov(game);
-// 	return (0);
-// }
 
 static void open_door(t_mlx *game)
 {
@@ -71,8 +48,21 @@ static void open_door(t_mlx *game)
 			j = -1;
 	else if 		(!game->ray[(int)WIDTH / 2].hit_down && !game->ray[(int)WIDTH / 2].hit_left)
 			i = -1; 
-	if (mapHasDoor(game, (((int)game->player.x >> 6) + j), ((int)game->player.y >> 6) + i))
-		game->map.map[((int)game->player.y >> 6) + i][((int)game->player.x >> 6) + j] = '0';
+	if (mapHasDoor(game, (((int)game->player.x >> 6) + j), ((int)game->player.y >> 6) + i) == 1 && game->ray[(int)WIDTH / 2].door.is_a_door == 1)
+	{
+		game->map.map[((int)game->player.y >> 6) + i][((int)game->player.x >> 6) + j] = 'A';
+		game->frames = 0;
+	}
+	else if (game->map.map[((int)game->player.y >> 6) + i][((int)game->player.x >> 6) + j] == 'Z')
+	{
+		game->map.map[((int)game->player.y >> 6) + i][((int)game->player.x >> 6) + j] = 'O';
+		game->frames = 0;
+	}
+
+	i = 0;
+	
+
+	// printf("%d\n", game->frames);
 }
 
 int	move(int keycode, t_mlx *game)
@@ -109,7 +99,7 @@ int	check_key_is_on(int keycode, t_mlx *game)
 		game->player.walk_speed = 3;
 		game->player.turn_speed /= 1.5;
 	}
-	else if (keycode == E)
+ 	if (keycode == E)
 		open_door(game);
 		
 	return (0);

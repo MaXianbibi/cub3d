@@ -6,7 +6,7 @@
 /*   By: jmorneau <jmorneau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/23 13:40:03 by jmorneau          #+#    #+#             */
-/*   Updated: 2022/10/03 17:49:13 by jmorneau         ###   ########.fr       */
+/*   Updated: 2022/10/16 03:15:46 by jmorneau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # include <stdio.h>
 
 # define PI 			3.14159265359
-# define TWO_PI 		6.28318530718
+# define TWO_PI 		PI * 2
 # define QUART_PI		PI / 2
 # define QUART3_PI		3 * PI / 2
 
@@ -52,6 +52,8 @@
 # define CELLING		0x5c4e1f
 # define FLOOR			0xb29852
 
+# define INV			0xFF00FF
+
 // KEY
 # define D 				2
 # define A 				0
@@ -73,6 +75,25 @@ typedef struct	s_key_b
 	int			w;
 }				t_key_b;
 
+typedef struct	s_vector
+{
+	float		x;
+	float		y;
+}				t_vector;
+
+
+typedef struct	s_door
+{
+	t_vector	door_location;
+	float		dist_door;
+	int			is_a_door;
+
+	int			open;
+
+	int			starting_x;
+	int			finish_x;
+}				t_door;
+
 typedef struct	s_ray
 {
 	float		side_delta_x;
@@ -81,7 +102,9 @@ typedef struct	s_ray
 	
 	int			hit_down;
 	int			hit_left;
-	int			is_a_door;
+
+	t_door		door;
+
 }				t_ray;
 
 
@@ -91,30 +114,32 @@ typedef struct	s_player
 	float 		y;
 	float		withd;
 	float		height;
-	int			turn_direction; // -1 for left, 1 for right
-	int			walk_direction; // î
 	float		rotation_angle;
 	float		walk_speed;
 	float		turn_speed;
+
+	int			walk_direction; // î
+	int			turn_direction; // -1 for left, 1 for right
 }				t_player;
 
 typedef struct	s_map
 {
-	char		**map;
 	int			col;
 	int			raw;
+	char		**map;
 }				t_map;
 
 typedef struct	s_data
 {
 	void		*img;
 	char		*addr;
+	
+	float		img_width;
+	float		img_height;
 	int			bits_per_pixel;
 	int			line_length;
 	int			endian;
 	
-	float		img_width;
-	float		img_height;
 }				t_data;
 
 
@@ -125,6 +150,8 @@ typedef struct	s_texture
 	t_data		west;
 	t_data		east;
 	t_data		door;
+	t_data		floor;
+	t_data		celling;
 
 }				t_texture;
 
@@ -138,11 +165,14 @@ typedef struct s_mlx
 {
 	t_basic		basic;
 	t_data		img;
+	t_data		hud_img;
 	t_player	player;
 	t_map		map;
 	t_ray		*ray;
 	t_texture	texture;
 	t_key_b		key_hook;
+
+	int			frames;
 }	t_mlx;
 
 void 	image_init(t_mlx *game);
@@ -169,5 +199,8 @@ int		move_player(t_mlx *game);
 // int		move_beta(int keycode, t_mlx *game);
 int		check_key_is_on(int keycode, t_mlx *game);
 int		mapHasDoor(t_mlx *game , int x, int y);
+void	draw_door_beta(t_mlx *game, t_ray ray, int pixel_x, float angle);
+void	print_texture_door(t_data *img, t_data *img_texture, float stepx, float stepy, float lineO, float ty_step, float lineH, float pixel_x, t_mlx *game);
+
 
 #endif
